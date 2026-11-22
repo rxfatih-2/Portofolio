@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = "6281234567890";
+const WHATSAPP_NUMBER = "6288226621362";
 const GATE_SESSION_KEY = "rxfatih_gate_session";
 
 // Daftar kandidat file otomatis (mencari di folder assets/ maupun folder utama)
