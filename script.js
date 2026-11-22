@@ -3,23 +3,16 @@ const GATE_SESSION_KEY = "rxfatih_gate_session";
 
 // Daftar kandidat file otomatis (mencari di folder assets/ maupun folder utama)
 const GATE_VIDEO_CANDIDATES = [
-  "assets/972f27f6.mp4",
-  "972f27f6.mp4",
+  
   "assets/video_2.mp4",
-  "video_2.mp4",
-  "assets/video_1.mp4",
-  "video_1.mp4"
+  "video_2.mp4"
+  
 ];
 
 const HERO_VIDEO_CANDIDATES = [
   "assets/video_1.mp4",
-  "video_1.mp4",
-  "assets/102879.mp4",
-  "102879.mp4",
-  "assets/video_2.mp4",
-  "video_2.mp4",
-  "assets/972f27f6.mp4",
-  "972f27f6.mp4"
+  "video_1.mp4"
+
 ];
 
 const PORTRAIT_CANDIDATES = [
