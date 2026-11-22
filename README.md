@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://rxfatih-2.github.io/Portofolio-/">
-    <img src="assets/banner.svg" width="100%" alt="RXFatih Animated Shinobi Banner" />
+    <img src="https://raw.githubusercontent.com/rxfatih-2/Portofolio-/main/assets/banner.svg" width="100%" alt="RXFatih Naruto Shinobi Banner" />
   </a>
 
   <p align="center">
@@ -49,8 +49,8 @@ Portofolio-/
 ├── script.js           # Kontrol sesi gerbang, auto-backsound, & resolver media otomatis
 ├── README.md           # Dokumentasi repositori & pratinjau animasi
 └── assets/
-    ├── banner.svg      # Banner animasi vektor untuk dokumentasi GitHub
+    ├── banner.svg      # Banner animasi vektor tema Naruto untuk GitHub README
     ├── video_1.mp4     # Video latar utama
     ├── 972f27f6.mp4    # Video gerbang pembuka (16:9 landscape)
     ├── foto-formal.jpg # Potret profil M Rizki Akbar
-    └── bgm.mp3         # Audio latar halaman utama
+    
