@@ -14,7 +14,7 @@
 
 ### Pratinjau Video Gerbang & Latar
 
-TEMPEL_LINK_USER_ATTACHMENTS_DARI_ISSUE_DI_SINI
+https://github.com/user-attachments/assets/165036b3-08b3-4d20-af1e-35defc8fbed7
 
 ---
 
