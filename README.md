@@ -17,7 +17,7 @@
 ### Pratinjau Animasi & Gerbang Sinematik
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/1403da75-d357-4d27-b677-52be804e360d" width="100%" alt="Animasi Segel Shinobi & Chakra RXFatih" />
+  <img src="https://github.com/user-attachments/assets/video_1" width="100%" alt="Animasi Segel Shinobi & Chakra RXFatih" />
 </div>
 
 > **Cara Menambahkan Pemutar Video MP4 Langsung di GitHub README:**
