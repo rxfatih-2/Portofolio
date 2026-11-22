@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://rxfatih-2.github.io/Portofolio-/">
-    <img src="https://raw.githubusercontent.com/rxfatih-2/Portofolio-/main/assets/banner.svg" width="100%" alt="RXFatih Naruto Shinobi Banner" />
+    <img src="[https://raw.githubusercontent.com/rxfatih-2/Portofolio-/main/assets/banner.svg](https://github.com/rxfatih-2/Portofolio/blob/main/main/assets/banner.svg)" width="100%" alt="RXFatih Naruto Shinobi Banner" />
   </a>
 
   <p align="center">
