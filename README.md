@@ -13,7 +13,7 @@
 ---
 
 ### Pratinjau Video Gerbang & Latar
-
+https://github.com/user-attachments/assets/bfe3f1de-2063-4423-b117-23610e439199
 https://github.com/user-attachments/assets/165036b3-08b3-4d20-af1e-35defc8fbed7
 
 ---
