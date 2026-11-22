@@ -1,5 +1,38 @@
-const WHATSAPP_NUMBER = "6288226621362";
+const WHATSAPP_NUMBER = "6281234567890";
 const GATE_SESSION_KEY = "rxfatih_gate_session";
+
+// Daftar kandidat file otomatis (mencari di folder assets/ maupun folder utama)
+const GATE_VIDEO_CANDIDATES = [
+  "assets/972f27f6.mp4",
+  "972f27f6.mp4",
+  "assets/video_2.mp4",
+  "video_2.mp4",
+  "assets/video_1.mp4",
+  "video_1.mp4"
+];
+
+const HERO_VIDEO_CANDIDATES = [
+  "assets/video_1.mp4",
+  "video_1.mp4",
+  "assets/102879.mp4",
+  "102879.mp4",
+  "assets/video_2.mp4",
+  "video_2.mp4",
+  "assets/972f27f6.mp4",
+  "972f27f6.mp4"
+];
+
+const PORTRAIT_CANDIDATES = [
+  "assets/foto-formal.jpg",
+  "foto-formal.jpg",
+  "assets/portrait.jpg",
+  "portrait.jpg"
+];
+
+const BGM_CANDIDATES = [
+  "assets/bgm.mp3",
+  "bgm.mp3"
+];
 
 const PROJECTS = [
   {
@@ -125,6 +158,7 @@ const reopenGateBtn = document.getElementById("reopenGateBtn");
 const gateVideo = document.getElementById("gateVideo");
 const gateAmbientVideo = document.getElementById("gateAmbientVideo");
 const heroVideo = document.getElementById("heroVideo");
+const chakraCanvas = document.getElementById("chakraCanvas");
 const bgmAudio = document.getElementById("bgmAudio");
 const bgmToggleBtn = document.getElementById("bgmToggleBtn");
 const bgmLabel = document.getElementById("bgmLabel");
@@ -140,6 +174,7 @@ let userMutedManually = false;
 let isGateOpen = true;
 let isTransitioning = false;
 let activeModalProject = null;
+let bgmAvailable = false;
 
 function hasSessionGatePassed() {
   try {
@@ -172,7 +207,7 @@ function updateAudioUi(enabled) {
 }
 
 function ensureMutedAutoplay(videoEl) {
-  if (!videoEl) return;
+  if (!videoEl || !videoEl.getAttribute("src")) return;
   videoEl.defaultMuted = true;
   videoEl.muted = true;
   videoEl.playsInline = true;
@@ -182,14 +217,104 @@ function ensureMutedAutoplay(videoEl) {
   }
 }
 
+// Otomatis meluruskan video jika rasio aslinya vertikal/miring (tinggi > lebar)
+function applyAutoOrientation(videoEl) {
+  if (!videoEl || !videoEl.videoWidth || !videoEl.videoHeight) return;
+  const isSidewaysPortrait = videoEl.videoHeight > videoEl.videoWidth;
+  videoEl.classList.toggle("rotate-90-cw", isSidewaysPortrait);
+}
+
+// Mencoba daftar URL kandidat secara berurutan hingga menemukan file yang benar-benar ada
+function resolveVideoCandidates(videoEl, candidates, onResolved) {
+  if (!videoEl || !candidates.length) return;
+  let index = 0;
+
+  const tryNext = () => {
+    if (index >= candidates.length) return;
+    const candidateSrc = candidates[index];
+    index += 1;
+
+    const cleanup = () => {
+      videoEl.removeEventListener("loadedmetadata", handleMeta);
+      videoEl.removeEventListener("loadeddata", handleLoaded);
+      videoEl.removeEventListener("error", handleError);
+    };
+
+    const handleMeta = () => {
+      applyAutoOrientation(videoEl);
+    };
+
+    const handleLoaded = () => {
+      cleanup();
+      videoEl.classList.add("is-ready");
+      if (typeof onResolved === "function") {
+        onResolved(candidateSrc);
+      }
+    };
+
+    const handleError = () => {
+      cleanup();
+      tryNext();
+    };
+
+    videoEl.addEventListener("loadedmetadata", handleMeta);
+    videoEl.addEventListener("loadeddata", handleLoaded);
+    videoEl.addEventListener("error", handleError);
+    videoEl.src = candidateSrc;
+    videoEl.load();
+  };
+
+  tryNext();
+}
+
+function resolvePortraitImage() {
+  const imgEl = document.getElementById("profilePortrait");
+  const fallbackEl = document.getElementById("portraitFallback");
+  if (!imgEl) return;
+
+  let index = 0;
+  const tryNext = () => {
+    if (index >= PORTRAIT_CANDIDATES.length) {
+      imgEl.style.display = "none";
+      if (fallbackEl) fallbackEl.style.display = "flex";
+      return;
+    }
+    const src = PORTRAIT_CANDIDATES[index];
+    index += 1;
+    imgEl.onerror = tryNext;
+    imgEl.src = src;
+  };
+  tryNext();
+}
+
+function resolveBgmAudio() {
+  if (!bgmAudio) return;
+  let index = 0;
+  const tryNext = () => {
+    if (index >= BGM_CANDIDATES.length) {
+      bgmAvailable = false;
+      return;
+    }
+    const src = BGM_CANDIDATES[index];
+    index += 1;
+    bgmAudio.onloadeddata = () => {
+      bgmAvailable = true;
+    };
+    bgmAudio.onerror = tryNext;
+    bgmAudio.src = src;
+    bgmAudio.load();
+  };
+  tryNext();
+}
+
 function attemptStartBacksound() {
   if (isGateOpen || userMutedManually) return;
 
-  if (heroVideo && heroVideo.paused) {
+  if (heroVideo && heroVideo.getAttribute("src") && heroVideo.paused) {
     heroVideo.play().catch(() => {});
   }
 
-  if (bgmAudio && bgmAudio.readyState >= 2) {
+  if (bgmAvailable && bgmAudio) {
     if (heroVideo) heroVideo.muted = true;
     bgmAudio.volume = 0.5;
     bgmAudio.play()
@@ -205,7 +330,7 @@ function attemptStartBacksound() {
 }
 
 function enableHeroVideoSound() {
-  if (!heroVideo || userMutedManually) return;
+  if (!heroVideo || !heroVideo.getAttribute("src") || userMutedManually) return;
   heroVideo.muted = false;
   heroVideo.volume = 0.65;
   heroVideo.play()
@@ -240,7 +365,7 @@ function syncGateVideos(shouldPlay) {
   });
 }
 
-// Menyalakan backsound otomatis pada interaksi sentuhan atau scroll pertama di halaman utama
+// Menyalakan backsound otomatis pada sentuhan atau scroll pertama di halaman utama
 function handleFirstUserInteraction(event) {
   if (isGateOpen || userMutedManually || isAudioEnabled) return;
   if (event.target && event.target.closest("#bgmToggleBtn")) return;
@@ -252,6 +377,56 @@ function registerAutoAudioGestures() {
   events.forEach((evtName) => {
     window.addEventListener(evtName, handleFirstUserInteraction, { passive: true });
   });
+}
+
+// Lapisan visual partikel chakra sebagai latar hidup saat video buffering
+function initChakraAmbientCanvas() {
+  if (!chakraCanvas) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const ctx = chakraCanvas.getContext("2d");
+  if (!ctx) return;
+
+  let width = 0;
+  let height = 0;
+  const particles = Array.from({ length: 34 }, (_, i) => ({
+    x: Math.random(),
+    y: Math.random(),
+    r: 1.2 + Math.random() * 2.2,
+    vy: 0.0005 + Math.random() * 0.0012,
+    vx: (Math.random() - 0.5) * 0.0004,
+    isCyan: i % 3 === 0,
+    alpha: 0.25 + Math.random() * 0.55
+  }));
+
+  const resize = () => {
+    width = chakraCanvas.width = chakraCanvas.offsetWidth || window.innerWidth;
+    height = chakraCanvas.height = chakraCanvas.offsetHeight || window.innerHeight;
+  };
+  resize();
+  window.addEventListener("resize", resize, { passive: true });
+
+  const renderFrame = () => {
+    ctx.clearRect(0, 0, width, height);
+    for (const p of particles) {
+      p.y -= p.vy;
+      p.x += p.vx;
+      if (p.y < -0.02) {
+        p.y = 1.02;
+        p.x = Math.random();
+      }
+      const px = p.x * width;
+      const py = p.y * height;
+      ctx.beginPath();
+      ctx.arc(px, py, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.isCyan
+        ? `rgba(56, 189, 248, ${p.alpha})`
+        : `rgba(249, 115, 22, ${p.alpha})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(renderFrame);
+  };
+  requestAnimationFrame(renderFrame);
 }
 
 function emitGateSparks() {
@@ -420,22 +595,33 @@ function closeProjectDetail() {
   }
 }
 
-ensureMutedAutoplay(heroVideo);
+// Inisialisasi aset media otomatis
+initChakraAmbientCanvas();
+resolvePortraitImage();
+resolveBgmAudio();
+
+resolveVideoCandidates(heroVideo, HERO_VIDEO_CANDIDATES, () => {
+  ensureMutedAutoplay(heroVideo);
+  if (!isGateOpen && !userMutedManually) {
+    attemptStartBacksound();
+  }
+});
+
+resolveVideoCandidates(gateVideo, GATE_VIDEO_CANDIDATES, (resolvedSrc) => {
+  if (gateAmbientVideo) {
+    gateAmbientVideo.src = resolvedSrc;
+    gateAmbientVideo.load();
+  }
+  if (isGateOpen) {
+    syncGateVideos(true);
+  }
+});
 
 if (hasSessionGatePassed()) {
   skipGateImmediately();
 } else {
   syncGateVideos(true);
 }
-
-[gateVideo, gateAmbientVideo, heroVideo].forEach((vid) => {
-  if (!vid) return;
-  vid.addEventListener("loadeddata", () => {
-    if (vid === heroVideo || isGateOpen) {
-      ensureMutedAutoplay(vid);
-    }
-  });
-});
 
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) return;
