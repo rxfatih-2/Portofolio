@@ -29,7 +29,6 @@
       <video
         id="gateAmbientVideo"
         class="gate-ambient-video"
-        src="assets/video_1.mp4"
         autoplay
         muted
         loop
@@ -39,11 +38,10 @@
         aria-hidden="true"
       ></video>
 
-      <div class="gate-stage-frame">
+      <div id="gateStageFrame" class="gate-stage-frame">
         <video
           id="gateVideo"
           class="gate-video"
-          src="assets/video_1.mp4"
           autoplay
           muted
           loop
@@ -89,7 +87,7 @@
     </button>
   </div>
 
-  <audio id="bgmAudio" src="assets/bgm.mp3" loop preload="auto"></audio>
+  <audio id="bgmAudio" loop preload="auto"></audio>
 
   <header class="site-header" id="siteHeader">
     <div class="container header-inner">
@@ -160,10 +158,10 @@
   <main id="mainContent">
     <section id="hero" class="hero-section">
       <div class="hero-video-stage">
+        <canvas id="chakraCanvas" class="chakra-canvas" aria-hidden="true"></canvas>
         <video
           id="heroVideo"
-          class="hero-video rotate-90-ccw"
-          src="assets/video_2.mp4"
+          class="hero-video"
           autoplay
           muted
           loop
@@ -255,12 +253,12 @@
         <aside class="profile-card">
           <div class="portrait-frame">
             <img
+              id="profilePortrait"
               src="assets/foto-formal.jpg"
               alt="Potret formal M Rizki Akbar"
               class="portrait-img"
-              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
             />
-            <div class="portrait-fallback" aria-hidden="true">
+            <div id="portraitFallback" class="portrait-fallback" aria-hidden="true">
               <span class="kanji-fallback" lang="ja">忍</span>
               <span class="mono-tag">M. RIZKI AKBAR</span>
             </div>
