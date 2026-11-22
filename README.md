@@ -1,8 +1,6 @@
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:09090b,50:ea580c,100:f97316&height=170&section=header&text=RXFATIH%20PORTFOLIO&fontSize=38&fontColor=fafafa&fontAlignY=36&desc=M.%20Rizki%20Akbar%20%E2%80%94%20Frontend%20%26%20Digital%20Invitation%20Developer&descAlignY=58&descSize=15&animation=fadeIn" width="100%" alt="RXFatih Header Banner" />
-
   <a href="https://rxfatih-2.github.io/Portofolio-/">
-    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=18&duration=3200&pause=1000&color=F97316&center=true&vCenter=true&width=680&lines=M.+Rizki+Akbar+%2F%2F+RXFatih+Digital+Studio;Gerbang+Shoji+3D+%26+Animasi+Sinematik+Interaktif;06+Website+%26+Undangan+Digital+Aktif+di+GitHub+Pages" alt="Typing Animation" />
+    <img src="assets/banner.svg" width="100%" alt="RXFatih Animated Shinobi Banner" />
   </a>
 
   <p align="center">
@@ -14,16 +12,9 @@
 
 ---
 
-### Pratinjau Animasi & Gerbang Sinematik
+### Pratinjau Video Gerbang & Latar
 
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/video_1" width="100%" alt="Animasi Segel Shinobi & Chakra RXFatih" />
-</div>
-
-> **Cara Menambahkan Pemutar Video MP4 Langsung di GitHub README:**
-> 1. Buka file `README.md` ini langsung di website GitHub, lalu klik ikon **Edit (pensil)**.
-> 2. Seret (*drag & drop*) file video `video_1.mp4` (ukuran di bawah 10 MB) ke baris di bawah kutipan ini.
-> 3. GitHub otomatis membuat tautan `https://github.com/user-attachments/assets/...` yang langsung tampil sebagai pemutar video di halaman utama repositori.
+TEMPEL_LINK_USER_ATTACHMENTS_DARI_ISSUE_DI_SINI
 
 ---
 
@@ -63,4 +54,3 @@ Portofolio-/
     ├── 972f27f6.mp4    # Video gerbang pembuka (16:9 landscape)
     ├── foto-formal.jpg # Potret profil M Rizki Akbar
     └── bgm.mp3         # Audio latar halaman utama
-    
