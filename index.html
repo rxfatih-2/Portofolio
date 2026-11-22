@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M Rizki Akbar — RXFatih Portfolio</title>
+  <meta
+    name="description"
+    content="Portofolio resmi M Rizki Akbar (RXFatih). Pengembang web, undangan pernikahan digital bertema adat Nusantara, situs perayaan perusahaan, dan aplikasi interaktif."
+  />
+  <script>
+    try {
+      if (sessionStorage.getItem("rxfatih_gate_session") === "active" || window.location.hash) {
+        document.documentElement.classList.add("gate-bypassed");
+      }
+    } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Shippori+Mincho:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="gate-locked">
+  <div id="openingGate" class="opening-gate" role="dialog" aria-modal="true" aria-label="Gerbang pembuka portofolio RXFatih">
+    <div class="gate-media-layer">
+      <video
+        id="gateAmbientVideo"
+        class="gate-ambient-video"
+        src="assets/video_1.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        webkit-playsinline
+        preload="auto"
+        aria-hidden="true"
+      ></video>
+
+      <div class="gate-stage-frame">
+        <video
+          id="gateVideo"
+          class="gate-video"
+          src="assets/video_1.mp4"
+          autoplay
+          muted
+          loop
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+      </div>
+
+      <div class="gate-vignette" aria-hidden="true"></div>
+    </div>
+
+    <div class="gate-door gate-door-left" aria-hidden="true">
+      <div class="door-lattice"></div>
+      <div class="door-crest">
+        <span lang="ja">忍</span>
+      </div>
+    </div>
+    <div class="gate-door gate-door-right" aria-hidden="true">
+      <div class="door-lattice"></div>
+      <div class="door-crest">
+        <span lang="ja">解</span>
+      </div>
+    </div>
+
+    <div class="gate-seam-beam" aria-hidden="true"></div>
+    <div class="gate-shockwave" aria-hidden="true"></div>
+    <div id="gateSparks" class="gate-sparks" aria-hidden="true"></div>
+
+    <button
+      type="button"
+      id="gateCenterTrigger"
+      class="gate-center-trigger"
+      aria-label="Ketuk bagian tengah untuk membuka portofolio"
+    >
+      <span class="seal-ring seal-ring-outer" aria-hidden="true"></span>
+      <span class="seal-ring seal-ring-mid" aria-hidden="true"></span>
+      <span class="seal-ring seal-ring-inner" aria-hidden="true"></span>
+      <span class="seal-core">
+        <span class="seal-kanji" lang="ja" aria-hidden="true">忍</span>
+      </span>
+      <span class="seal-hint">KETUK SEGEL</span>
+    </button>
+  </div>
+
+  <audio id="bgmAudio" src="assets/bgm.mp3" loop preload="auto"></audio>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a href="#hero" class="brand-logo" aria-label="Beranda RXFatih">
+        <span class="brand-seal" lang="ja" aria-hidden="true">忍</span>
+        <span class="brand-name">RXFATIH</span>
+      </a>
+
+      <nav class="desktop-nav" aria-label="Navigasi Utama">
+        <a href="#projects" class="nav-link">Karya (06)</a>
+        <a href="#about" class="nav-link">Profil</a>
+        <a href="#services" class="nav-link">Layanan</a>
+        <a href="#contact" class="nav-link">Kontak</a>
+      </nav>
+
+      <div class="header-controls">
+        <button
+          type="button"
+          id="reopenGateBtn"
+          class="btn btn-icon"
+          aria-label="Putar ulang gerbang video"
+          title="Putar ulang gerbang video"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            <line x1="12" y1="3" x2="12" y2="21"></line>
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          id="bgmToggleBtn"
+          class="btn btn-secondary bgm-btn"
+          aria-pressed="false"
+          aria-label="Nyalakan atau matikan audio latar"
+        >
+          <span class="bgm-dot" aria-hidden="true"></span>
+          <span id="bgmLabel">Audio Off</span>
+        </button>
+
+        <button
+          type="button"
+          id="mobileMenuBtn"
+          class="btn btn-icon mobile-menu-btn"
+          aria-expanded="false"
+          aria-controls="mobileDrawer"
+          aria-label="Buka menu navigasi"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="4" y1="7" x2="20" y2="7"></line>
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="17" x2="20" y2="17"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobileDrawer" class="mobile-drawer" hidden>
+      <div class="container mobile-drawer-inner">
+        <a href="#projects" class="mobile-nav-link">Karya Aktif (06)</a>
+        <a href="#about" class="mobile-nav-link">Profil &amp; Keahlian</a>
+        <a href="#services" class="mobile-nav-link">Layanan Pembuatan Web</a>
+        <a href="#contact" class="mobile-nav-link">Kontak Langsung</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="mainContent">
+    <section id="hero" class="hero-section">
+      <div class="hero-video-stage">
+        <video
+          id="heroVideo"
+          class="hero-video rotate-90-ccw"
+          src="assets/video_2.mp4"
+          autoplay
+          muted
+          loop
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+      </div>
+      <div class="hero-scrim" aria-hidden="true"></div>
+
+      <div class="container hero-container">
+        <div class="hero-meta-bar">
+          <span class="mono-tag">M. RIZKI AKBAR // RXFATIH</span>
+          <span class="kanji-mark" lang="ja">終末の谷</span>
+        </div>
+
+        <div class="hero-copy">
+          <h1 class="hero-title">
+            Pengembang Web &amp; <span class="text-vermilion">Undangan Digital</span> Berkarakter.
+          </h1>
+          <p class="hero-subtitle">
+            Merancang antarmuka web modern yang cepat dan responsif, mulai dari undangan pernikahan digital bertema adat Nusantara, situs perayaan perusahaan, hingga permainan catur berbasis browser.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#projects" class="btn btn-primary btn-lg">
+              <span>Lihat 6 Website Aktif</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <button type="button" id="heroWhatsappBtn" class="btn btn-outline btn-lg">
+              <span>Konsultasi Proyek</span>
+            </button>
+          </div>
+        </div>
+
+        <dl class="hero-spec-grid">
+          <div class="spec-item">
+            <dt class="spec-label">IDENTITAS</dt>
+            <dd class="spec-value">M Rizki Akbar</dd>
+          </div>
+          <div class="spec-item">
+            <dt class="spec-label">PORTAL AKTIF</dt>
+            <dd class="spec-value">
+              <span class="status-indicator" aria-hidden="true"></span>
+              06 Website Live
+            </dd>
+          </div>
+          <div class="spec-item">
+            <dt class="spec-label">ARSITEKTUR</dt>
+            <dd class="spec-value">Frontend &amp; GitHub Pages</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section id="projects" class="section-block">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <p class="section-eyebrow">ARSIP PORTAL // 01 — 06</p>
+            <h2 class="section-title">Website &amp; Aplikasi Aktif</h2>
+          </div>
+          <p class="section-lead">
+            Seluruh proyek dibangun dengan struktur kode bersih, animasi ringan, dan tampilan adaptif untuk perangkat seluler maupun desktop.
+          </p>
+        </div>
+
+        <div class="filter-bar" role="tablist" aria-label="Filter kategori proyek">
+          <button type="button" class="filter-chip is-active" role="tab" aria-selected="true" data-filter="all">
+            Semua Karya (06)
+          </button>
+          <button type="button" class="filter-chip" role="tab" aria-selected="false" data-filter="wedding">
+            Undangan Digital (04)
+          </button>
+          <button type="button" class="filter-chip" role="tab" aria-selected="false" data-filter="web">
+            Web &amp; Game (02)
+          </button>
+        </div>
+
+        <div id="projectsGrid" class="projects-grid"></div>
+      </div>
+    </section>
+
+    <section id="about" class="section-block section-bordered">
+      <div class="container about-grid">
+        <aside class="profile-card">
+          <div class="portrait-frame">
+            <img
+              src="assets/foto-formal.jpg"
+              alt="Potret formal M Rizki Akbar"
+              class="portrait-img"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+            <div class="portrait-fallback" aria-hidden="true">
+              <span class="kanji-fallback" lang="ja">忍</span>
+              <span class="mono-tag">M. RIZKI AKBAR</span>
+            </div>
+          </div>
+
+          <div class="profile-meta">
+            <div class="profile-meta-row">
+              <span class="meta-key">Brand</span>
+              <span class="meta-val">RXFatih</span>
+            </div>
+            <div class="profile-meta-row">
+              <span class="meta-key">GitHub</span>
+              <a href="https://github.com/rxfatih-2" target="_blank" rel="noopener noreferrer" class="meta-link">
+                @rxfatih-2
+              </a>
+            </div>
+            <div class="profile-meta-row">
+              <span class="meta-key">Fokus</span>
+              <span class="meta-val">Web UI &amp; Undangan</span>
+            </div>
+          </div>
+        </aside>
+
+        <div class="about-content">
+          <p class="section-eyebrow">PROFIL PENGEMBANG</p>
+          <h2 class="section-title">Presisi Kode dengan Identitas Visual yang Kuat.</h2>
+          <p class="about-paragraph">
+            Saya <strong>M Rizki Akbar</strong>, pengembang web di balik <strong>RXFatih</strong>. Setiap proyek dirancang tanpa bergantung pada templat kaku, memadukan tipografi terstruktur, palet warna bermakna, musik latar terintegrasi, serta alur interaksi yang nyaman diakses langsung dari ponsel.
+          </p>
+
+          <div id="services" class="pillars-list">
+            <article class="pillar-item">
+              <span class="pillar-num">01</span>
+              <div>
+                <h3 class="pillar-title">Undangan Pernikahan Digital Kustom</h3>
+                <p class="pillar-desc">
+                  Adaptasi budaya Nusantara (Sunda, Bugis, Minangkabau) hingga tema kreatif interaktif lengkap dengan musik latar dan konfirmasi WhatsApp.
+                </p>
+              </div>
+            </article>
+
+            <article class="pillar-item">
+              <span class="pillar-num">02</span>
+              <div>
+                <h3 class="pillar-title">Website Bisnis &amp; Perayaan Perusahaan</h3>
+                <p class="pillar-desc">
+                  Halaman profil, situs peringatan hari jadi perusahaan, dan sistem antrean digital dengan tata letak modern dan kontras tinggi.
+                </p>
+              </div>
+            </article>
+
+            <article class="pillar-item">
+              <span class="pillar-num">03</span>
+              <div>
+                <h3 class="pillar-title">Permainan &amp; Aplikasi Web Ringan</h3>
+                <p class="pillar-desc">
+                  Implementasi logika permainan papan seperti catur berbasis HTML, CSS, dan JavaScript murni yang cepat dimuat di berbagai perangkat.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact" class="closing-footer">
+    <div class="container closing-inner">
+      <div class="closing-main">
+        <p class="section-eyebrow">MULAI KOLABORASI</p>
+        <h2 class="closing-title">
+          Butuh Website Profesional atau Undangan Digital Kustom?
+        </h2>
+        <p class="closing-desc">
+          Diskusikan konsep tema, jadwal peluncuran, dan kebutuhan fitur langsung melalui WhatsApp untuk respons cepat.
+        </p>
+
+        <div class="closing-actions">
+          <button type="button" id="footerWhatsappBtn" class="btn btn-primary btn-lg">
+            <span>Pesan via WhatsApp</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </button>
+
+          <a
+            href="https://github.com/rxfatih-2"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline btn-lg"
+          >
+            <span>Repositori GitHub</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="closing-bottom">
+        <span>© 2026 M Rizki Akbar — RXFatih.</span>
+        <a href="#hero" class="back-top-link">Kembali ke Atas ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <dialog id="projectModal" class="project-modal" aria-labelledby="modalTitle">
+    <div class="modal-surface">
+      <div class="modal-header">
+        <span id="modalCategory" class="badge">Kategori</span>
+        <button type="button" id="closeModalBtn" class="btn btn-icon" aria-label="Tutup detail proyek">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <h3 id="modalTitle" class="modal-title">Judul Proyek</h3>
+      <p id="modalDescription" class="modal-desc"></p>
+
+      <div class="modal-section">
+        <h4 class="modal-subtitle">Fitur Utama</h4>
+        <ul id="modalHighlights" class="modal-list"></ul>
+      </div>
+
+      <div id="modalTags" class="modal-tags"></div>
+
+      <div class="modal-footer">
+        <button type="button" id="modalOrderBtn" class="btn btn-outline">
+          <span>Pesan Tema Serupa</span>
+        </button>
+        <a
+          id="modalLiveLink"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-primary"
+        >
+          <span>Kunjungi Website</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
