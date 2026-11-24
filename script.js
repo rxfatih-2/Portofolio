@@ -1,717 +1,77 @@
-const WHATSAPP_NUMBER = "6288226621362";
-const GATE_SESSION_KEY = "rxfatih_gate_session";
+document.addEventListener('DOMContentLoaded', () => {
+  const entryGate = document.getElementById('entry-gate');
+  const unsealBtn = document.getElementById('unseal-btn');
+  const bgAudio = document.getElementById('bg-audio');
+  const gateVideo = document.getElementById('gate-video');
+  const heroVideo = document.getElementById('hero-video');
 
-// Daftar kandidat file otomatis (mencari di folder assets/ maupun folder utama)
-const GATE_VIDEO_CANDIDATES = [
-  
-  "assets/video_2.mp4",
-  "video_2.mp4"
-  
-];
+  let audioStarted = false;
 
-const HERO_VIDEO_CANDIDATES = [
-  "assets/video_1.mp4",
-  "video_1.mp4"
-
-];
-
-const PORTRAIT_CANDIDATES = [
-  "assets/foto-formal.jpg",
-  "foto-formal.jpg",
-  "assets/portrait.jpg",
-  "portrait.jpg"
-];
-
-const BGM_CANDIDATES = [
-  "assets/bgm.mp3",
-  "bgm.mp3"
-];
-
-const PROJECTS = [
-  {
-    id: "sunda-wedding",
-    index: "01",
-    category: "wedding",
-    categoryLabel: "Undangan Adat",
-    themeClass: "theme-sunda",
-    previewKicker: "ADAT SUNDA // DIGITAL INVITATION",
-    previewTitle: "Wilujeng Sumping — Prosesi Adat Sunda",
-    previewPills: ["Siger Sunda", "Musik Gamelan", "RSVP WA"],
-    title: "Undangan Digital Adat Sunda",
-    summary: "Undangan pernikahan digital bernuansa budaya Sunda dengan ornamen klasik, galeri foto, hitung mundur acara, dan konfirmasi kehadiran WhatsApp.",
-    highlights: [
-      "Tata letak khusus ponsel dengan transisi pembuka sampul",
-      "Integrasi audio latar tradisional dan kontrol pemutar",
-      "Formulir ucapan & konfirmasi kehadiran langsung ke WhatsApp"
-    ],
-    tags: ["HTML5", "CSS3", "JavaScript", "GitHub Pages"],
-    liveUrl: "https://rxfatih-2.github.io/Sunda-wedding-/"
-  },
-  {
-    id: "bugis-wedding",
-    index: "02",
-    category: "wedding",
-    categoryLabel: "Undangan Adat",
-    themeClass: "theme-bugis",
-    previewKicker: "ADAT BUGIS // DIGITAL INVITATION",
-    previewTitle: "Mappacci & Walimatul Ursy Bugis",
-    previewPills: ["Baju Bodo", "Tipografi Emas", "Peta Lokasi"],
-    title: "Undangan Digital Adat Bugis",
-    summary: "Situs undangan digital yang mengangkat estetika kerajaan Bugis dengan palet merah marun-emas, jadwal prosesi, dan navigasi lokasi acara.",
-    highlights: [
-      "Palet warna khas Bugis dengan tipografi editorial berkarakter",
-      "Penunjuk waktu hitung mundur otomatis menuju hari akad",
-      "Salin nomor rekening amplop digital sekali ketuk"
-    ],
-    tags: ["HTML5", "CSS3", "JavaScript", "GitHub Pages"],
-    liveUrl: "https://rxfatih-2.github.io/Bugis-wedding-/"
-  },
-  {
-    id: "minang-wedding",
-    index: "03",
-    category: "wedding",
-    categoryLabel: "Undangan Adat",
-    themeClass: "theme-minang",
-    previewKicker: "MINANGKABAU // DIGITAL INVITATION",
-    previewTitle: "Baralek Gadang — Adat Minangkabau",
-    previewPills: ["Suntiang Emas", "Rumah Gadang", "RSVP WA"],
-    title: "Undangan Digital Adat Minangkabau",
-    summary: "Undangan pernikahan digital bertema Minangkabau dengan aksen emas songket, susunan acara Baralek, serta integrasi pesan tamu.",
-    highlights: [
-      "Struktur komponen terpisah yang ringan di jaringan seluler",
-      "Susunan acara akad dan resepsi yang jelas dibaca tamu",
-      "Tautan peta interaktif dan konfirmasi tamu via WhatsApp"
-    ],
-    tags: ["HTML5", "CSS3", "JavaScript", "GitHub Pages"],
-    liveUrl: "https://rxfatih-2.github.io/Minangkabau-wedding-/"
-  },
-  {
-    id: "mario-wedding",
-    index: "04",
-    category: "wedding",
-    categoryLabel: "Tema Interaktif",
-    themeClass: "theme-mario",
-    previewKicker: "ARCADE EDITION // DIGITAL INVITATION",
-    previewTitle: "Super Mario & Peach Wedding Quest",
-    previewPills: ["Pixel HUD", "Animasi Karakter", "Audio Retro"],
-    title: "Undangan Digital Tema Super Mario",
-    summary: "Konsep undangan pernikahan bergaya gim retro dengan animasi karakter Mario & Peach, efek koin interaktif, dan alur cerita layaknya level permainan.",
-    highlights: [
-      "Animasi karakter CSS & JavaScript kustom tanpa library berat",
-      "Efek suara dan musik latar bernuansa gim klasik",
-      "Tetap memuat informasi jadwal, lokasi, dan RSVP secara lengkap"
-    ],
-    tags: ["HTML5", "CSS Animation", "JavaScript", "GitHub Pages"],
-    liveUrl: "https://rxfatih-2.github.io/Mario-wedding-/"
-  },
-  {
-    id: "hut-perusahaan",
-    index: "05",
-    category: "web",
-    categoryLabel: "Situs Korporat",
-    themeClass: "theme-hut",
-    previewKicker: "10TH ANNIVERSARY // CORPORATE WEB",
-    previewTitle: "Perayaan 10 Tahun Perjalanan Perusahaan",
-    previewPills: ["Milestone 10Th", "Galeri Tim", "Identitas Oranye"],
-    title: "Website HUT ke-10 Perusahaan",
-    summary: "Situs khusus perayaan satu dekade perusahaan dengan identitas visual oranye tegas, lini masa pencapaian, serta dokumentasi kegiatan.",
-    highlights: [
-      "Sistem warna korporat oranye-gelap dengan keterbacaan tinggi",
-      "Lini masa perjalanan 10 tahun yang tersusun rapi di layar HP",
-      "Branding khusus RXFatih dengan struktur kode modular"
-    ],
-    tags: ["HTML5", "CSS3", "JavaScript", "Corporate UI"],
-    liveUrl: "https://rxfatih-2.github.io/web-hut-perusahaan-/"
-  },
-  {
-    id: "chess-game",
-    index: "06",
-    category: "web",
-    categoryLabel: "Game Browser",
-    themeClass: "theme-chess",
-    previewKicker: "STRATEGY ENGINE // BROWSER GAME",
-    previewTitle: "Permainan Catur & Asah Otak Web",
-    previewPills: ["Papan 8×8", "Validasi Langkah", "Mode Taktik"],
-    title: "Permainan Catur Berbasis Web",
-    summary: "Aplikasi permainan catur dan asah otak yang berjalan langsung di browser tanpa instalasi, lengkap dengan validasi pergerakan bidak dan indikator giliran.",
-    highlights: [
-      "Logika papan catur interaktif dibangun dengan JavaScript murni",
-      "Kontrol sentuh presisi untuk layar smartphone maupun desktop",
-      "Pemuatan instan tanpa ketergantungan server eksternal"
-    ],
-    tags: ["JavaScript", "Game Logic", "HTML5", "CSS Grid"],
-    liveUrl: "https://rxfatih-2.github.io/Game-asah-otak-super/"
-  }
-];
-
-const openingGate = document.getElementById("openingGate");
-const gateCenterTrigger = document.getElementById("gateCenterTrigger");
-const gateSparks = document.getElementById("gateSparks");
-const reopenGateBtn = document.getElementById("reopenGateBtn");
-const gateVideo = document.getElementById("gateVideo");
-const gateAmbientVideo = document.getElementById("gateAmbientVideo");
-const heroVideo = document.getElementById("heroVideo");
-const chakraCanvas = document.getElementById("chakraCanvas");
-const bgmAudio = document.getElementById("bgmAudio");
-const bgmToggleBtn = document.getElementById("bgmToggleBtn");
-const bgmLabel = document.getElementById("bgmLabel");
-const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-const mobileDrawer = document.getElementById("mobileDrawer");
-const projectsGrid = document.getElementById("projectsGrid");
-const filterChips = document.querySelectorAll(".filter-chip");
-const projectModal = document.getElementById("projectModal");
-const closeModalBtn = document.getElementById("closeModalBtn");
-
-let isAudioEnabled = false;
-let userMutedManually = false;
-let isGateOpen = true;
-let isTransitioning = false;
-let activeModalProject = null;
-let bgmAvailable = false;
-
-function hasSessionGatePassed() {
-  try {
-    return sessionStorage.getItem(GATE_SESSION_KEY) === "active" || Boolean(window.location.hash);
-  } catch {
-    return false;
-  }
-}
-
-function markSessionGatePassed() {
-  try {
-    sessionStorage.setItem(GATE_SESSION_KEY, "active");
-  } catch {}
-}
-
-function clearSessionGatePassed() {
-  try {
-    sessionStorage.removeItem(GATE_SESSION_KEY);
-  } catch {}
-}
-
-function buildWhatsappUrl(message) {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-}
-
-function updateAudioUi(enabled) {
-  isAudioEnabled = enabled;
-  bgmToggleBtn.setAttribute("aria-pressed", String(enabled));
-  bgmLabel.textContent = enabled ? "Audio On" : "Audio Off";
-}
-
-function ensureMutedAutoplay(videoEl) {
-  if (!videoEl || !videoEl.getAttribute("src")) return;
-  videoEl.defaultMuted = true;
-  videoEl.muted = true;
-  videoEl.playsInline = true;
-  const playPromise = videoEl.play();
-  if (playPromise && typeof playPromise.catch === "function") {
-    playPromise.catch(() => {});
-  }
-}
-
-// Otomatis meluruskan video jika rasio aslinya vertikal/miring (tinggi > lebar)
-function applyAutoOrientation(videoEl) {
-  if (!videoEl || !videoEl.videoWidth || !videoEl.videoHeight) return;
-  const isSidewaysPortrait = videoEl.videoHeight > videoEl.videoWidth;
-  videoEl.classList.toggle("rotate-90-cw", isSidewaysPortrait);
-}
-
-// Mencoba daftar URL kandidat secara berurutan hingga menemukan file yang benar-benar ada
-function resolveVideoCandidates(videoEl, candidates, onResolved) {
-  if (!videoEl || !candidates.length) return;
-  let index = 0;
-
-  const tryNext = () => {
-    if (index >= candidates.length) return;
-    const candidateSrc = candidates[index];
-    index += 1;
-
-    const cleanup = () => {
-      videoEl.removeEventListener("loadedmetadata", handleMeta);
-      videoEl.removeEventListener("loadeddata", handleLoaded);
-      videoEl.removeEventListener("error", handleError);
-    };
-
-    const handleMeta = () => {
-      applyAutoOrientation(videoEl);
-    };
-
-    const handleLoaded = () => {
-      cleanup();
-      videoEl.classList.add("is-ready");
-      if (typeof onResolved === "function") {
-        onResolved(candidateSrc);
-      }
-    };
-
-    const handleError = () => {
-      cleanup();
-      tryNext();
-    };
-
-    videoEl.addEventListener("loadedmetadata", handleMeta);
-    videoEl.addEventListener("loadeddata", handleLoaded);
-    videoEl.addEventListener("error", handleError);
-    videoEl.src = candidateSrc;
-    videoEl.load();
-  };
-
-  tryNext();
-}
-
-function resolvePortraitImage() {
-  const imgEl = document.getElementById("profilePortrait");
-  const fallbackEl = document.getElementById("portraitFallback");
-  if (!imgEl) return;
-
-  let index = 0;
-  const tryNext = () => {
-    if (index >= PORTRAIT_CANDIDATES.length) {
-      imgEl.style.display = "none";
-      if (fallbackEl) fallbackEl.style.display = "flex";
-      return;
-    }
-    const src = PORTRAIT_CANDIDATES[index];
-    index += 1;
-    imgEl.onerror = tryNext;
-    imgEl.src = src;
-  };
-  tryNext();
-}
-
-function resolveBgmAudio() {
-  if (!bgmAudio) return;
-  let index = 0;
-  const tryNext = () => {
-    if (index >= BGM_CANDIDATES.length) {
-      bgmAvailable = false;
-      return;
-    }
-    const src = BGM_CANDIDATES[index];
-    index += 1;
-    bgmAudio.onloadeddata = () => {
-      bgmAvailable = true;
-    };
-    bgmAudio.onerror = tryNext;
-    bgmAudio.src = src;
-    bgmAudio.load();
-  };
-  tryNext();
-}
-
-function attemptStartBacksound() {
-  if (isGateOpen || userMutedManually) return;
-
-  if (heroVideo && heroVideo.getAttribute("src") && heroVideo.paused) {
-    heroVideo.play().catch(() => {});
-  }
-
-  if (bgmAvailable && bgmAudio) {
-    if (heroVideo) heroVideo.muted = true;
-    bgmAudio.volume = 0.5;
-    bgmAudio.play()
+  const startBackgroundAudio = () => {
+    if (audioStarted || !bgAudio) return;
+    bgAudio.volume = 0.45;
+    bgAudio.play()
       .then(() => {
-        updateAudioUi(true);
+        audioStarted = true;
       })
       .catch(() => {
-        enableHeroVideoSound();
+        // Menunggu interaksi pengguna berikutnya jika browser memblokir autoplay
       });
-  } else {
-    enableHeroVideoSound();
-  }
-}
-
-function enableHeroVideoSound() {
-  if (!heroVideo || !heroVideo.getAttribute("src") || userMutedManually) return;
-  heroVideo.muted = false;
-  heroVideo.volume = 0.65;
-  heroVideo.play()
-    .then(() => {
-      updateAudioUi(true);
-    })
-    .catch(() => {
-      heroVideo.muted = true;
-      updateAudioUi(false);
-    });
-}
-
-function stopAllBacksound() {
-  if (bgmAudio && !bgmAudio.paused) {
-    bgmAudio.pause();
-  }
-  if (heroVideo) {
-    heroVideo.muted = true;
-  }
-  updateAudioUi(false);
-}
-
-function syncGateVideos(shouldPlay) {
-  [gateVideo, gateAmbientVideo].forEach((vid) => {
-    if (!vid) return;
-    if (shouldPlay) {
-      ensureMutedAutoplay(vid);
-    } else {
-      vid.muted = true;
-      vid.pause();
-    }
-  });
-}
-
-// Menyalakan backsound otomatis pada sentuhan atau scroll pertama di halaman utama
-function handleFirstUserInteraction(event) {
-  if (isGateOpen || userMutedManually || isAudioEnabled) return;
-  if (event.target && event.target.closest("#bgmToggleBtn")) return;
-  attemptStartBacksound();
-}
-
-function registerAutoAudioGestures() {
-  const events = ["pointerdown", "touchstart", "touchmove", "wheel", "scroll", "keydown"];
-  events.forEach((evtName) => {
-    window.addEventListener(evtName, handleFirstUserInteraction, { passive: true });
-  });
-}
-
-// Lapisan visual partikel chakra sebagai latar hidup saat video buffering
-function initChakraAmbientCanvas() {
-  if (!chakraCanvas) return;
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-  const ctx = chakraCanvas.getContext("2d");
-  if (!ctx) return;
-
-  let width = 0;
-  let height = 0;
-  const particles = Array.from({ length: 34 }, (_, i) => ({
-    x: Math.random(),
-    y: Math.random(),
-    r: 1.2 + Math.random() * 2.2,
-    vy: 0.0005 + Math.random() * 0.0012,
-    vx: (Math.random() - 0.5) * 0.0004,
-    isCyan: i % 3 === 0,
-    alpha: 0.25 + Math.random() * 0.55
-  }));
-
-  const resize = () => {
-    width = chakraCanvas.width = chakraCanvas.offsetWidth || window.innerWidth;
-    height = chakraCanvas.height = chakraCanvas.offsetHeight || window.innerHeight;
   };
-  resize();
-  window.addEventListener("resize", resize, { passive: true });
 
-  const renderFrame = () => {
-    ctx.clearRect(0, 0, width, height);
-    for (const p of particles) {
-      p.y -= p.vy;
-      p.x += p.vx;
-      if (p.y < -0.02) {
-        p.y = 1.02;
-        p.x = Math.random();
-      }
-      const px = p.x * width;
-      const py = p.y * height;
-      ctx.beginPath();
-      ctx.arc(px, py, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = p.isCyan
-        ? `rgba(56, 189, 248, ${p.alpha})`
-        : `rgba(249, 115, 22, ${p.alpha})`;
-      ctx.fill();
+  const openPortfolioGate = () => {
+    startBackgroundAudio();
+
+    if (entryGate) {
+      entryGate.classList.add('is-unsealed');
+      document.body.classList.remove('gate-locked');
+
+      window.setTimeout(() => {
+        if (gateVideo) {
+          gateVideo.pause();
+        }
+      }, 800);
     }
-    requestAnimationFrame(renderFrame);
+
+    if (heroVideo && heroVideo.paused) {
+      heroVideo.play().catch(() => {});
+    }
   };
-  requestAnimationFrame(renderFrame);
-}
 
-function emitGateSparks() {
-  if (!gateSparks) return;
-  gateSparks.innerHTML = "";
-  const totalSparks = 18;
-  for (let i = 0; i < totalSparks; i += 1) {
-    const spark = document.createElement("span");
-    spark.className = "gate-spark";
-    const angle = Math.round((360 / totalSparks) * i + (Math.random() * 14 - 7));
-    const distance = Math.round(110 + Math.random() * 140);
-    spark.style.setProperty("--angle", `${angle}deg`);
-    spark.style.setProperty("--dist", `${distance}px`);
-    gateSparks.appendChild(spark);
-  }
-}
-
-function skipGateImmediately() {
-  isGateOpen = false;
-  isTransitioning = false;
-  document.documentElement.classList.add("gate-bypassed");
-  document.body.classList.remove("gate-locked");
-  openingGate.classList.add("is-hidden");
-  openingGate.classList.remove("is-activating", "is-opening");
-  syncGateVideos(false);
-
-  ensureMutedAutoplay(heroVideo);
-  attemptStartBacksound();
-}
-
-function triggerGateOpeningSequence() {
-  if (!isGateOpen || isTransitioning) return;
-  isTransitioning = true;
-  userMutedManually = false;
-  markSessionGatePassed();
-
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  if (prefersReducedMotion) {
-    isGateOpen = false;
-    isTransitioning = false;
-    document.body.classList.remove("gate-locked");
-    document.body.classList.add("hero-revealed");
-    openingGate.classList.add("is-hidden");
-    syncGateVideos(false);
-    attemptStartBacksound();
-    return;
+  if (entryGate) {
+    document.body.classList.add('gate-locked');
   }
 
-  openingGate.classList.add("is-activating");
-  emitGateSparks();
+  if (unsealBtn) {
+    unsealBtn.addEventListener('click', openPortfolioGate);
+  }
 
-  setTimeout(() => {
-    isGateOpen = false;
-    document.body.classList.remove("gate-locked");
-    document.body.classList.add("hero-revealed");
-    openingGate.classList.add("is-opening");
-    syncGateVideos(false);
-    attemptStartBacksound();
-  }, 360);
-
-  setTimeout(() => {
-    openingGate.classList.add("is-hidden");
-    openingGate.classList.remove("is-activating", "is-opening");
-    if (gateSparks) gateSparks.innerHTML = "";
-    isTransitioning = false;
-  }, 1220);
-}
-
-function lockPortfolioGate() {
-  clearSessionGatePassed();
-  document.documentElement.classList.remove("gate-bypassed");
-  isGateOpen = true;
-  isTransitioning = false;
-  stopAllBacksound();
-  openingGate.classList.remove("is-hidden", "is-activating", "is-opening");
-  document.body.classList.remove("hero-revealed");
-  document.body.classList.add("gate-locked");
-  syncGateVideos(true);
-}
-
-function createProjectCard(project) {
-  const article = document.createElement("article");
-  article.className = "project-card";
-
-  const pillsHtml = project.previewPills
-    .map((pill) => `<span class="preview-mini-pill">${pill}</span>`)
-    .join("");
-
-  article.innerHTML = `
-    <div class="ui-preview-frame ${project.themeClass}">
-      <div class="preview-chrome">
-        <div class="chrome-dots" aria-hidden="true">
-          <span></span><span></span><span></span>
-        </div>
-        <span>rxfatih-2.github.io</span>
-      </div>
-      <div class="preview-canvas">
-        <span class="preview-kicker">${project.previewKicker}</span>
-        <p class="preview-headline">${project.previewTitle}</p>
-        <div class="preview-pill-row">${pillsHtml}</div>
-      </div>
-    </div>
-
-    <div class="card-body">
-      <div class="card-top-row">
-        <span class="card-index">PORTAL ${project.index}</span>
-        <span class="badge">${project.categoryLabel}</span>
-      </div>
-      <h3 class="card-title">${project.title}</h3>
-      <p class="card-desc">${project.summary}</p>
-    </div>
-
-    <div class="card-footer">
-      <button type="button" class="btn btn-secondary" data-detail-id="${project.id}">
-        Detail
-      </button>
-      <a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-external-portal>
-        <span>Buka Situs</span>
-      </a>
-    </div>
-  `;
-
-  return article;
-}
-
-function renderProjects(filterKey = "all") {
-  projectsGrid.innerHTML = "";
-  const filtered = filterKey === "all"
-    ? PROJECTS
-    : PROJECTS.filter((item) => item.category === filterKey);
-
-  filtered.forEach((project) => {
-    projectsGrid.appendChild(createProjectCard(project));
+  // Fallback pemicu audio saat pengguna melakukan sentuhan, klik, atau gulir
+  ['pointerdown', 'keydown', 'scroll'].forEach((eventName) => {
+    window.addEventListener(eventName, startBackgroundAudio, { passive: true });
   });
-}
 
-function openProjectDetail(projectId) {
-  const project = PROJECTS.find((item) => item.id === projectId);
-  if (!project) return;
+  // Animasi kemunculan bagian saat digulir
+  const revealTargets = document.querySelectorAll(
+    '.hero-editorial-body, .arsenal-manifesto, .scroll-entry, .mission-row, .closing-top'
+  );
 
-  activeModalProject = project;
-  document.getElementById("modalCategory").textContent = `${project.categoryLabel} · Portal ${project.index}`;
-  document.getElementById("modalTitle").textContent = project.title;
-  document.getElementById("modalDescription").textContent = project.summary;
-  document.getElementById("modalLiveLink").href = project.liveUrl;
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
 
-  const highlightsEl = document.getElementById("modalHighlights");
-  highlightsEl.innerHTML = project.highlights.map((point) => `<li>${point}</li>`).join("");
-
-  const tagsEl = document.getElementById("modalTags");
-  tagsEl.innerHTML = project.tags.map((tag) => `<span class="badge">${tag}</span>`).join("");
-
-  if (typeof projectModal.showModal === "function") {
-    projectModal.showModal();
-  } else {
-    projectModal.setAttribute("open", "");
-  }
-}
-
-function closeProjectDetail() {
-  if (typeof projectModal.close === "function") {
-    projectModal.close();
-  } else {
-    projectModal.removeAttribute("open");
-  }
-}
-
-// Inisialisasi aset media otomatis
-initChakraAmbientCanvas();
-resolvePortraitImage();
-resolveBgmAudio();
-
-resolveVideoCandidates(heroVideo, HERO_VIDEO_CANDIDATES, () => {
-  ensureMutedAutoplay(heroVideo);
-  if (!isGateOpen && !userMutedManually) {
-    attemptStartBacksound();
-  }
-});
-
-resolveVideoCandidates(gateVideo, GATE_VIDEO_CANDIDATES, (resolvedSrc) => {
-  if (gateAmbientVideo) {
-    gateAmbientVideo.src = resolvedSrc;
-    gateAmbientVideo.load();
-  }
-  if (isGateOpen) {
-    syncGateVideos(true);
-  }
-});
-
-if (hasSessionGatePassed()) {
-  skipGateImmediately();
-} else {
-  syncGateVideos(true);
-}
-
-document.addEventListener("visibilitychange", () => {
-  if (document.hidden) return;
-  if (isGateOpen) {
-    syncGateVideos(true);
-  } else {
-    ensureMutedAutoplay(heroVideo);
-  }
-});
-
-renderProjects("all");
-registerAutoAudioGestures();
-
-window.addEventListener("pageshow", () => {
-  if (hasSessionGatePassed() && isGateOpen) {
-    skipGateImmediately();
-  }
-});
-
-gateCenterTrigger.addEventListener("click", triggerGateOpeningSequence);
-reopenGateBtn.addEventListener("click", lockPortfolioGate);
-
-bgmToggleBtn.addEventListener("click", () => {
-  if (isAudioEnabled) {
-    userMutedManually = true;
-    stopAllBacksound();
-  } else {
-    userMutedManually = false;
-    attemptStartBacksound();
-  }
-});
-
-mobileMenuBtn.addEventListener("click", () => {
-  const isOpen = mobileMenuBtn.getAttribute("aria-expanded") === "true";
-  mobileMenuBtn.setAttribute("aria-expanded", String(!isOpen));
-  mobileDrawer.hidden = isOpen;
-});
-
-mobileDrawer.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => {
-    mobileMenuBtn.setAttribute("aria-expanded", "false");
-    mobileDrawer.hidden = true;
-  });
-});
-
-filterChips.forEach((chip) => {
-  chip.addEventListener("click", () => {
-    filterChips.forEach((btn) => {
-      btn.classList.remove("is-active");
-      btn.setAttribute("aria-selected", "false");
+    revealTargets.forEach((el) => {
+      el.classList.add('reveal-item');
+      observer.observe(el);
     });
-    chip.classList.add("is-active");
-    chip.setAttribute("aria-selected", "true");
-    renderProjects(chip.dataset.filter);
-  });
-});
-
-projectsGrid.addEventListener("click", (event) => {
-  const detailBtn = event.target.closest("[data-detail-id]");
-  if (detailBtn) {
-    openProjectDetail(detailBtn.dataset.detailId);
-    return;
-  }
-
-  if (event.target.closest("[data-external-portal]")) {
-    markSessionGatePassed();
   }
 });
-
-document.getElementById("modalLiveLink").addEventListener("click", () => {
-  markSessionGatePassed();
-});
-
-closeModalBtn.addEventListener("click", closeProjectDetail);
-
-projectModal.addEventListener("click", (event) => {
-  const rect = projectModal.getBoundingClientRect();
-  const insideDialog =
-    event.clientX >= rect.left &&
-    event.clientX <= rect.right &&
-    event.clientY >= rect.top &&
-    event.clientY <= rect.bottom;
-  if (!insideDialog) {
-    closeProjectDetail();
-  }
-});
-
-document.getElementById("modalOrderBtn").addEventListener("click", () => {
-  const projectName = activeModalProject ? activeModalProject.title : "Website Kustom";
-  const text = `Halo RXFatih, saya tertarik memesan website dengan referensi "${projectName}". Boleh diskusi detailnya?`;
-  window.open(buildWhatsappUrl(text), "_blank", "noopener,noreferrer");
-});
-
-const openGeneralWhatsapp = () => {
-  const text = "Halo M Rizki Akbar (RXFatih), saya ingin konsultasi pembuatan website / undangan digital.";
-  window.open(buildWhatsappUrl(text), "_blank", "noopener,noreferrer");
-};
-
-document.getElementById("heroWhatsappBtn").addEventListener("click", openGeneralWhatsapp);
-document.getElementById("footerWhatsappBtn").addEventListener("click", openGeneralWhatsapp);
