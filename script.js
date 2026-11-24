@@ -3,13 +3,13 @@ const GATE_SESSION_KEY = "rxfatih_shinobi_gate";
 
 const GATE_VIDEO_CANDIDATES = [
   
-  "assets/video_1.mp4",
+  
   "assets/video_2.mp4"
 ];
 
 const HERO_VIDEO_CANDIDATES = [
-  "assets/video_1.mp4",
-  "assets/video_2.mp4"
+  "assets/video_1.mp4"
+  
 ];
 
 const PORTRAIT_CANDIDATES = [
