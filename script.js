@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = "6288226621362";
+const WHATSAPP_NUMBER = "628822662132";
 const GATE_SESSION_KEY = "rxfatih_shinobi_gate";
 
 const GATE_VIDEO_CANDIDATES = [
